@@ -25,12 +25,10 @@ const Register = async (req, res) => {
       });
 
       const RegisterUser = await Newuser.save();
-      const token = genratreAccessToken(RegisterUser._id);
 
       return res.status(201).json({
         message: "User Registerd Succeffuly ",
         RegisterUser,
-        token,
       });
     } else {
       return res.status(409).json({
@@ -76,6 +74,7 @@ const Login = async (req, res) => {
     });
     return res.status(201).json({
       message: "Logged in SuccesFully ",
+      finduser,
     });
   } catch (error) {
     return res.status(502).json({
@@ -87,15 +86,14 @@ const Login = async (req, res) => {
 
 const Logout = async (req, res) => {
   try {
-    //   Take current user details and lear the cookie or local storage Infornmation
-    const UserData = req.user;
-    const findUser = await user.findById(UserData.id);
-    const token = genratreAccessToken(UserData.id);
+    //    Clear the cookie or local storage Jwt Token
+
     res.clearCookie("token", {
       httpOnly: true,
     });
     return res.status(201).json({
       message: "user Logout Succefully ",
+      findUser,
     });
   } catch (error) {
     return res.status(502).json({
