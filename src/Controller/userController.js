@@ -6,10 +6,11 @@ const Register = async (req, res) => {
   const { name, email, Mobilenumner, Password, Address, Gender, DOB } =
     req.body;
   try {
-    console.log(name, email, Mobilenumner, Password, Address, Gender, DOB);
+    //   find  user on the the  bases of  email and mobileNumber
     const Finduser = await user.findOne({
       $or: [{ email: email }, { MobileNumber: Mobilenumner }],
     });
+    //  check already not existed
     if (!Finduser) {
       const HashPassword = await bcrypt.hash(Password, 10);
 
@@ -25,11 +26,6 @@ const Register = async (req, res) => {
 
       const RegisterUser = await Newuser.save();
       const token = genratreAccessToken(RegisterUser._id);
-
-      res.cookie("token", token, {
-        withCredentials: true,
-        httpOnly: false,
-      });
 
       return res.status(201).json({
         message: "User Registerd Succeffuly ",
@@ -52,15 +48,17 @@ const Login = async (req, res) => {
   const { emailOrMobile, Password } = req.body;
 
   try {
+    //  Find user on the bases of email or mobile number
     const finduser = await user.findOne({
       $or: [{ email: emailOrMobile }, { MobileNumber: emailOrMobile }],
     });
-
+    //  check user in db
     if (!finduser) {
       return res.status(404).json({
         message: "Incorrect Password Or Email",
       });
     }
+    // Compare Password
     const PlainPassword = await bcrypt.compare(Password, finduser.Password);
 
     if (!PlainPassword) {
@@ -69,15 +67,15 @@ const Login = async (req, res) => {
         message: "Incorrect Password  ",
       });
     }
-    const token = createSecretToken(user._id);
-    console.log("This is My Token On  Baknd Login Controller ", token);
+    //  genrate An refresh Token  and Save in cookie or localstorage
+    const token = genratreAccessToken(finduser._id);
+
     res.cookie("token", token, {
       withCredentials: true,
-      httpOnly: false,
+      httpOnly: true,
     });
     return res.status(201).json({
       message: "Logged in SuccesFully ",
-      token,
     });
   } catch (error) {
     return res.status(502).json({
@@ -88,12 +86,37 @@ const Login = async (req, res) => {
 };
 
 const Logout = async (req, res) => {
-  const tokrn = genratreAccessToken(user._id);
-  res.clearCookie("token", {
-    httpOnly: true,
-  });
-  return res.status(201).json({
-    message: "user Logout Succefully ",
-  });
+  try {
+    //   Take current user details and lear the cookie or local storage Infornmation
+    const UserData = req.user;
+    const findUser = await user.findById(UserData.id);
+    const token = genratreAccessToken(UserData.id);
+    res.clearCookie("token", {
+      httpOnly: true,
+    });
+    return res.status(201).json({
+      message: "user Logout Succefully ",
+    });
+  } catch (error) {
+    return res.status(502).json({
+      message: " Something Went Wrong ",
+    });
+  }
 };
-export { Register, Login, Logout };
+const UserProfile = async (req, res) => {
+  try {
+    //  take data of current login user
+    const UserProfiledata = req.user;
+    const FindUser = await user.findById(UserProfiledata.id);
+    return res.status(201).json({
+      message: "This  is Current user Login Profile data ",
+      FindUser,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Something  Went Wrong",
+    });
+  }
+};
+
+export { Register, Login, Logout, UserProfile };

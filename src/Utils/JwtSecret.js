@@ -5,7 +5,7 @@ dotenv.config({
 });
 const genratreAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESSS_TOKRN_SECRECT, {
-    expiresIn: "2d",
+    expiresIn: "1d",
   });
 };
 export { genratreAccessToken };
