@@ -27,7 +27,7 @@ export const Auth = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(403).json({
-      message: "Invalid Or Expoired Sesssion",
+      message: "Invalid Or Expired Sesssion",
     });
   }
 };

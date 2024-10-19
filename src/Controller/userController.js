@@ -87,13 +87,16 @@ const Login = async (req, res) => {
 const Logout = async (req, res) => {
   try {
     //    Clear the cookie or local storage Jwt Token
+    const User = req.user;
+    const FindUser = await user.findById(User.id);
 
     res.clearCookie("token", {
       httpOnly: true,
     });
+
     return res.status(201).json({
       message: "user Logout Succefully ",
-      findUser,
+      FindUser,
     });
   } catch (error) {
     return res.status(502).json({
