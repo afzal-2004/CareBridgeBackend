@@ -1,4 +1,7 @@
 import { Router } from "express";
+import multer from "multer";
+import { upload } from "../../Middleware/Multer.js";
+//  import All user Related Controller
 import {
   Login,
   Register,
@@ -6,7 +9,10 @@ import {
   UserProfile,
 } from "../Controller/userController.js";
 
+//  Adding  New Doctor Controller
 import { addNewDoctor } from "../Controller/DoctorController.js";
+
+//  import admin Related Controller
 import {
   adminRegistraction,
   adminLogin,
@@ -26,6 +32,6 @@ router.post("/adminRegister", adminRegistraction);
 router.post("/adminLogin", adminLogin);
 router.post("/adminLogout", Auth, adminLogout);
 //   admin    Operation Route
-router.get("/addNewDoctor", addNewDoctor);
+router.post("/addNewDoctor", upload.single("image"), addNewDoctor);
 
 export default router;

@@ -1,6 +1,25 @@
 const addNewDoctor = async (req, res) => {
-  return res.json(201).json({
-    message: "Controller Are Ready To Add new Doctor Data ",
-  });
+  const {
+    name,
+    avtar,
+    speciality,
+    doctorFees,
+    experience,
+    degree,
+    appointmentTime,
+    addresss,
+    about,
+  } = req.body;
+  console.log(
+    name,
+    avtar,
+    speciality,
+    doctorFees,
+    experience,
+    degree,
+    appointmentTime,
+    addresss,
+    about
+  );
 };
 export { addNewDoctor };
