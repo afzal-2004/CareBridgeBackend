@@ -8,17 +8,21 @@ cloudinary.config({
   api_key: process.env.CLOUDNIARY_API_KEY,
   api_secret: process.env.CLOUDNIARY_API_SECRET,
 });
-const UploadImage = async (path, folder = "my-profile") => {
+const UploadImage = async (path) => {
   try {
+    if (!path) return null;
+    console.log("this is My path", path);
     const uploadResult = await cloudinary.uploader.upload(path, {
-      folder: folder,
+      resource_type: "auto",
     });
+    console.log(" This is Result Afrer My Upload result ", uploadResult);
+    console.log("My Multer Works Correctly  Now I am Enter My Cloudniar\n ");
+
     console.log(uploadResult);
 
-    return { url: uploadResult.secure_url, publicId: data.public_id };
+    return uploadResult;
   } catch (error) {
-    console.log(err);
-    throw err;
+    console.log(error);
   }
 };
-export default UploadImage;
+export { UploadImage };

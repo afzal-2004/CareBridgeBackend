@@ -1,6 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import { upload } from "../../Middleware/Multer.js";
+// const upload = multer();
 //  import All user Related Controller
 import {
   Login,
@@ -32,6 +33,6 @@ router.post("/adminRegister", adminRegistraction);
 router.post("/adminLogin", adminLogin);
 router.post("/adminLogout", Auth, adminLogout);
 //   admin    Operation Route
-router.post("/addNewDoctor", upload.single("image"), addNewDoctor);
+router.post("/addNewDoctor", upload.single("avtar"), addNewDoctor);
 
 export default router;
