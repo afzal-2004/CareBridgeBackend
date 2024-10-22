@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
 import dotenv from "dotenv";
 dotenv.config({
   path: "./.env",
@@ -15,13 +16,15 @@ const UploadImage = async (path) => {
     const uploadResult = await cloudinary.uploader.upload(path, {
       resource_type: "auto",
     });
-    console.log(" This is Result Afrer My Upload result ", uploadResult);
-    console.log("My Multer Works Correctly  Now I am Enter My Cloudniar\n ");
+    // console.log(" This is Result Afrer My Upload result ", uploadResult);
+    // console.log("My Multer Works Correctly  Now I am Enter My Cloudniar\n ");
 
-    console.log(uploadResult);
-
+    // console.log(uploadResult);
+    fs.unlinkSync(path);
     return uploadResult;
   } catch (error) {
+    fs.unlinkSync(path);
+
     console.log(error);
   }
 };

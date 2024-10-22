@@ -11,10 +11,11 @@ const addNewDoctor = async (req, res) => {
     addresss,
     about,
   } = req.body;
-  const avtar = req.files?.avtar;
+  const avtar = req.file;
 
   console.log("This is My Avtar image uploaded", avtar);
-  const imageurl = await UploadImage(avtar);
+  console.log("This is Path of My Uploaded File ", avtar.path);
+  const imageurl = await UploadImage(avtar.path);
   console.log("This is My Image Url", imageurl);
   console.log(
     name,
