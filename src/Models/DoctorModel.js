@@ -8,6 +8,11 @@ const DoctorSchema = new mongoose.Schema(
     avtar: {
       type: String,
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     speciality: {
       type: String,
       required: true,
@@ -16,7 +21,7 @@ const DoctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    expirence: {
+    experience: {
       type: Number,
       required: true,
     },

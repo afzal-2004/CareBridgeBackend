@@ -11,7 +11,11 @@ import {
 } from "../Controller/userController.js";
 
 //  Adding  New Doctor Controller
-import { addNewDoctor } from "../Controller/DoctorController.js";
+import {
+  addNewDoctor,
+  AccessDoctor,
+  deleteDoctor,
+} from "../Controller/DoctorController.js";
 
 //  import admin Related Controller
 import {
@@ -34,5 +38,7 @@ router.post("/adminLogin", adminLogin);
 router.post("/adminLogout", Auth, adminLogout);
 //   admin    Operation Route
 router.post("/addNewDoctor", upload.single("avtar"), addNewDoctor);
+router.get("/getDoctorlist", AccessDoctor);
+router.delete("/deleteDoctor/:id", deleteDoctor);
 
 export default router;
