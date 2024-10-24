@@ -16,10 +16,7 @@ const UploadImage = async (path) => {
     const uploadResult = await cloudinary.uploader.upload(path, {
       resource_type: "auto",
     });
-    // console.log(" This is Result Afrer My Upload result ", uploadResult);
-    // console.log("My Multer Works Correctly  Now I am Enter My Cloudniar\n ");
 
-    // console.log(uploadResult);
     fs.unlinkSync(path);
     return uploadResult;
   } catch (error) {

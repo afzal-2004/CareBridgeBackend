@@ -1,5 +1,6 @@
 import { UploadImage } from "../Utils/Cloudniary.js";
 import { Doctor } from "../Models/DoctorModel.js";
+import getDataUri from "../Utils/DataUri.js";
 const addNewDoctor = async (req, res) => {
   const {
     name,
@@ -12,24 +13,13 @@ const addNewDoctor = async (req, res) => {
     addresss,
     about,
   } = req.body;
-  console.log(
-    `This is The Value Send By My Frountend Side is ",
-      Name ${name},
- S ${speciality},
-    E ${email},
-   F ${doctorFees},
-   Ex ${experience},
-   Deg ${degree},
-    AT ${appointmentTime},
-     Ad  ${addresss},
-    Ab ${about} `
-  );
 
   const avtar = req.file;
   console.log("This is My Avtar", avtar);
+
   const FindDoctor = await Doctor.findOne({ email });
   const imageurl = await UploadImage(avtar.path);
-  console.log("This is My image Url Saved In DataBase", imageurl.url);
+  // console.log("This is My image Url Saved In DataBase", imageurl.url);
   //  Check Doctor Existed Or Not
 
   try {

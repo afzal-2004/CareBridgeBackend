@@ -11,4 +11,6 @@ const storage = multer.diskStorage({
     console.log("this is The name of My File", uniqueName);
   },
 });
-export const upload = multer({ storage: storage });
+
+const upload = multer({ storage: storage });
+export const singleUpload = upload.single("avtar");
