@@ -37,7 +37,7 @@ router.post("/adminRegister", adminRegistraction);
 router.post("/adminLogin", adminLogin);
 router.post("/adminLogout", Auth, adminLogout);
 //   admin    Operation Route
-router.post("/addNewDoctor", singleUpload, addNewDoctor);
+router.post("/addNewDoctor", Auth, singleUpload, addNewDoctor);
 router.get("/getDoctorlist", AccessDoctor);
 router.delete("/deleteDoctor/:id", deleteDoctor);
 
