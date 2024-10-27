@@ -54,6 +54,7 @@ const addNewDoctor = async (req, res) => {
 };
 
 const AccessDoctor = async (req, res) => {
+  //  find all The Doctor this is Publiccialy Abalibe for  everyone
   try {
     const data = await Doctor.find({});
     return res.status(201).json({
@@ -68,13 +69,10 @@ const AccessDoctor = async (req, res) => {
 };
 const deleteDoctor = async (req, res) => {
   const id = req.params;
-  console.log("this is id Passed By  My Frountend ", id);
+
   try {
-    if (!FindDoctor) {
-      return res.status(404).json({
-        message: "Something Went Wrong",
-      });
-    }
+    //  find the doctor bases on   id and delete This item  Doctor Deletion is Authecated Routes Only Admin   have To acess to delete Doctor
+
     const FindDoctor = await Doctor.findByIdAndDelete({ id });
     return res.status(201).json({
       message: "Doctor Deletd Sucessfuly ",
