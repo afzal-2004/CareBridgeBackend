@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import { singleUpload } from "../../Middleware/Multer.js";
-// const upload = multer();
+
 //  import All user Related Controller
 import {
   Login,
