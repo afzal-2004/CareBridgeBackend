@@ -8,7 +8,11 @@ dotenv.config({
   path: "./.env",
 });
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true, limit: "15kb" }));
 app.use(cookieParser());
 app.use(express.json({ limit: "16mb" }));

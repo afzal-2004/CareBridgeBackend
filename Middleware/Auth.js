@@ -6,7 +6,6 @@ dotenv.config({
 });
 export const Auth = async (req, res, next) => {
   const Token = req.headers.authorization;
-  // console.log("This  is Token get From  My auth Side is ", Token);
 
   if (!Token || !Token.startsWith("Bearer ")) {
     return res
