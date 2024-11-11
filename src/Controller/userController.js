@@ -1,7 +1,9 @@
 import bcrypt from "bcrypt";
 import { user } from "../Models/userModel.js";
 import { genratreAccessToken } from "../Utils/JwtSecret.js";
-
+import { Doctor } from "../Models/DoctorModel.js";
+import { Appintment } from "../Models/AppointedDoctor.js";
+import mongoose from "mongoose";
 const Register = async (req, res) => {
   const { name, email, Mobilenumner, Password, Address, Gender, DOB } =
     req.body;
@@ -120,5 +122,31 @@ const UserProfile = async (req, res) => {
     });
   }
 };
+const AppointedDoctor = async (req, res) => {
+  const id = req.params.id;
+  const { date, day, appointedTime } = req.body;
+  console.log(id);
+  console.log(date, day, appointedTime);
+  const findDoctor = await Doctor.findById(id);
+  try {
+    const AppointedDoctor = new Appintment({
+      Doctor: id,
+      Date: date,
+      day: day,
+      appointedTime: appointedTime,
+    });
+    console.log("This is My Appointed Doctor", AppointedDoctor);
+    const Appointdoctor = await AppointedDoctor.save();
+    console.log("This Is Appointed Doctor saved in My Db", Appointdoctor);
+    return res.status(200).json({
+      message: "Doctor  Appointed",
+      Appointdoctor,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: "Something Went Wrong  ",
+    });
+  }
+};
 
-export { Register, Login, Logout, UserProfile };
+export { Register, Login, Logout, UserProfile, AppointedDoctor };
