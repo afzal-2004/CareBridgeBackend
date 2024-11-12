@@ -9,6 +9,7 @@ import {
   Logout,
   UserProfile,
   AppointedDoctor,
+  AccessAppointedDoctor,
 } from "../Controller/userController.js";
 
 //  Adding  New Doctor Controller
@@ -33,6 +34,7 @@ router.post("/Login", Login);
 router.post("/Logout", Auth, Logout);
 router.get("/Userprofile", Auth, UserProfile);
 router.post("/AppointedDoctor/:id", Auth, AppointedDoctor);
+router.get("/AccessAppointedDoctor", Auth, AccessAppointedDoctor);
 
 //   admin  Routes
 router.post("/adminRegister", adminRegistraction);

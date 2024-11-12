@@ -9,9 +9,9 @@ const AppointedDoctorSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    day: {
-      type: String,
-      require: true,
+    appointedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
     },
     appointedTime: {
       type: String,

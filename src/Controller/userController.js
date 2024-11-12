@@ -123,21 +123,24 @@ const UserProfile = async (req, res) => {
   }
 };
 const AppointedDoctor = async (req, res) => {
+  //  take  Doctor id  from the User Prams
   const id = req.params.id;
-  const { date, day, appointedTime } = req.body;
-  console.log(id);
-  console.log(date, day, appointedTime);
-  const findDoctor = await Doctor.findById(id);
+  //    Access Current Login user
+  const CurrentUserid = req.user;
+  const { date, appointedTime } = req.body;
+
+  console.log(date, appointedTime, CurrentUserid.id);
+
   try {
     const AppointedDoctor = new Appintment({
       Doctor: id,
       Date: date,
-      day: day,
+      appointedBy: CurrentUserid.id,
       appointedTime: appointedTime,
     });
-    console.log("This is My Appointed Doctor", AppointedDoctor);
+
     const Appointdoctor = await AppointedDoctor.save();
-    console.log("This Is Appointed Doctor saved in My Db", Appointdoctor);
+
     return res.status(200).json({
       message: "Doctor  Appointed",
       Appointdoctor,
@@ -149,4 +152,27 @@ const AppointedDoctor = async (req, res) => {
   }
 };
 
-export { Register, Login, Logout, UserProfile, AppointedDoctor };
+const AccessAppointedDoctor = async (req, res) => {
+  try {
+    const CurrentUserid = req.user;
+
+    const findAppointDoctor = await Appintment.findOne({
+      appointedBy: CurrentUserid.id,
+    });
+    // console.log(findAppointDoctor);
+    return res.status(201).json(findAppointDoctor);
+  } catch (error) {
+    return res.status(400).json({
+      message: "Somethig Went Wrong ",
+    });
+  }
+};
+
+export {
+  Register,
+  Login,
+  Logout,
+  UserProfile,
+  AppointedDoctor,
+  AccessAppointedDoctor,
+};
