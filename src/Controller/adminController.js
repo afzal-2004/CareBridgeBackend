@@ -32,11 +32,12 @@ const adminRegistraction = async (req, res) => {
   }
 };
 const adminLogin = async (req, res) => {
-  const { emailOrMobileNumber, Password } = req.body;
+  const { emailOrMobile, Password } = req.body;
+  console.log(emailOrMobile, Password);
 
   try {
     const FindUser = await Admin.findOne({
-      $or: [{ email: emailOrMobileNumber }, { Mobile: emailOrMobileNumber }],
+      $or: [{ email: emailOrMobile }, { Mobile: emailOrMobile }],
     });
 
     if (!FindUser) {
