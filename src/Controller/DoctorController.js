@@ -1,6 +1,6 @@
 import { UploadImage } from "../Utils/Cloudniary.js";
 import { Doctor } from "../Models/DoctorModel.js";
-import getDataUri from "../Utils/DataUri.js";
+
 const addNewDoctor = async (req, res) => {
   const {
     name,

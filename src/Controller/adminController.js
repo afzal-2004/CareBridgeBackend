@@ -58,7 +58,7 @@ const adminLogin = async (req, res) => {
       httpOnly: true,
     });
     return res.status(201).json({
-      message: "SuccesFully Login",
+      message: " Admin SuccesFully Login",
       AccessToken,
     });
   } catch (error) {
