@@ -13,13 +13,13 @@ const addNewDoctor = async (req, res) => {
     addresss,
     about,
   } = req.body;
-
+  // console.log(req.body);
   const avtar = req.file;
   console.log("This is My Avtar", avtar);
 
   const FindDoctor = await Doctor.findOne({ email });
   const imageurl = await UploadImage(avtar.path);
-  // console.log("This is My image Url Saved In DataBase", imageurl.url);
+  console.log("This is My image Url Saved In DataBase", imageurl.url);
   //  Check Doctor Existed Or Not
 
   try {
@@ -46,7 +46,7 @@ const addNewDoctor = async (req, res) => {
       doctor,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(502).json({
       message: "Something Went Wrong",
     });

@@ -14,7 +14,7 @@ export const Auth = async (req, res, next) => {
   }
 
   const token = Token.split(" ")[1];
-  // console.log(" This is  Token from frountend Side ", token);
+  console.log("  Token get  from frountend Side ", token);
   if (!token) {
     return res.status(401).json({ message: "You Are Not Authorized" });
   }
