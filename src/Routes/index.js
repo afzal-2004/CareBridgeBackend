@@ -24,6 +24,8 @@ import {
   adminRegistraction,
   adminLogin,
   adminLogout,
+  AccessTotalAppointed,
+  TotalActivePatient,
 } from "../Controller/adminController.js";
 import { Auth } from "../../Middleware/Auth.js";
 const router = Router();
@@ -40,6 +42,8 @@ router.get("/AccessAppointedDoctor", Auth, AccessAppointedDoctor);
 router.post("/adminRegister", adminRegistraction);
 router.post("/adminLogin", adminLogin);
 router.post("/adminLogout", Auth, adminLogout);
+router.get("/AccessTotalAppointed", AccessTotalAppointed);
+router.get("/TotalActivePatient", TotalActivePatient);
 //   admin    Operation Route
 router.post("/addNewDoctor", Auth, singleUpload, addNewDoctor);
 router.get("/getDoctorlist", AccessDoctor);

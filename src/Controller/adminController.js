@@ -1,6 +1,8 @@
 import { Admin } from "../Models/AdminModel.js";
 import bcrypt from "bcrypt";
 import { genratreAccessToken } from "../Utils/JwtSecret.js";
+import { Appintment } from "../Models/AppointedDoctor.js";
+import { user } from "../Models/userModel.js";
 const adminRegistraction = async (req, res) => {
   const { Mobile, email, Password } = req.body;
   const hashpassword = await bcrypt.hash(Password, 10);
@@ -86,4 +88,31 @@ const adminLogout = async (req, res) => {
     });
   }
 };
-export { adminRegistraction, adminLogin, adminLogout };
+const AccessTotalAppointed = async (req, res) => {
+  try {
+    const FindAllAppointed = await Appintment.find({});
+    return res.status(201).json(FindAllAppointed);
+  } catch (error) {
+    return res.status(401).json({
+      message: "SSomething Went wrong",
+    });
+  }
+};
+const TotalActivePatient = async (req, res) => {
+  //FindTotal user and Returen from  try
+  try {
+    const TotaUser = await user.find({});
+    return res.status(201).json(TotaUser);
+  } catch (error) {
+    return res.status(404).json({
+      message: "Something Went Wrong ",
+    });
+  }
+};
+export {
+  adminRegistraction,
+  adminLogin,
+  adminLogout,
+  AccessTotalAppointed,
+  TotalActivePatient,
+};
