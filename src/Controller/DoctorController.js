@@ -13,13 +13,12 @@ const addNewDoctor = async (req, res) => {
     addresss,
     about,
   } = req.body;
-  // console.log(req.body);
   const avtar = req.file;
-  console.log("This is My Avtar", avtar);
+  // console.log("This is My Avtar", avtar);
 
   const FindDoctor = await Doctor.findOne({ email });
   const imageurl = await UploadImage(avtar.path);
-  console.log("This is My image Url Saved In DataBase", imageurl.url);
+  // console.log("This is My image Url Saved In DataBase", imageurl.url, req.body);
   //  Check Doctor Existed Or Not
 
   try {
@@ -31,8 +30,8 @@ const addNewDoctor = async (req, res) => {
     const AddDoctor = new Doctor({
       name,
       avtar: imageurl.url,
-      speciality,
       email,
+      speciality,
       doctorFees,
       experience,
       degree,
@@ -40,7 +39,9 @@ const addNewDoctor = async (req, res) => {
       addresss,
       about,
     });
+    // console.log("This is Data I Get Till Add Doctor ", AddDoctor);
     const doctor = await AddDoctor.save();
+    // console.log("This is the Doctor saved in my db is ", doctor);
     return res.status(201).json({
       message: "Doctor Are Added Succesfully ",
       doctor,
@@ -66,15 +67,19 @@ const AccessDoctor = async (req, res) => {
 };
 const deleteDoctor = async (req, res) => {
   const id = req.params.id;
+  console.log("This is The id Of this Doctor ", id);
 
   try {
     //  find the doctor bases on   id and delete This item  Doctor Deletion is Authecated Routes Only Admin   have To acess to delete Doctor
 
-    const FindDoctor = await Doctor.findByIdAndDelete({ id });
-    return res.status(201).json({
-      message: "Doctor Deletd Sucessfuly ",
-      FindDoctor,
-    });
+    const FindDoctor = await Doctor.findByIdAndDelete(id);
+    if (FindDoctor) {
+      return res.status(201).json({
+        message: "Doctor Deletd Sucessfuly ",
+        FindDoctor,
+      });
+    }
+    return res.status(404).json(" Try some times Later ");
   } catch (error) {
     return res.status(502).json({
       message: "Something Error",

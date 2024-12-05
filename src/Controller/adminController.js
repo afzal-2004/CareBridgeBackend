@@ -109,6 +109,7 @@ const TotalActivePatient = async (req, res) => {
     });
   }
 };
+
 export {
   adminRegistraction,
   adminLogin,
