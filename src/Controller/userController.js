@@ -129,7 +129,7 @@ const AppointedDoctor = async (req, res) => {
   const CurrentUserid = req.user;
   const { date, appointedTime } = req.body;
 
-  console.log(date, appointedTime, CurrentUserid.id);
+  // console.log(date, appointedTime, CurrentUserid.id);
 
   try {
     const AppointedDoctor = new Appintment({
@@ -155,15 +155,39 @@ const AppointedDoctor = async (req, res) => {
 const AccessAppointedDoctor = async (req, res) => {
   try {
     const CurrentUserid = req.user;
+    const findDoctor = await Appintment.find({});
+    // console.log(findDoctor);
+    if (findDoctor) {
+      const findAppointDoctor = await Appintment.findOne({
+        appointedBy: CurrentUserid.id,
+      });
 
-    const findAppointDoctor = await Appintment.findOne({
-      appointedBy: CurrentUserid.id,
-    });
+      return res.status(201).json(findAppointDoctor);
+    }
+    return res.status(201).json(findDoctor);
     // console.log(findAppointDoctor);
-    return res.status(201).json(findAppointDoctor);
   } catch (error) {
     return res.status(400).json({
       message: "Somethig Went Wrong ",
+    });
+  }
+};
+const DeletedAppointedDoctor = async (req, res) => {
+  const id = req.params.id;
+  console.log("This is id My currenyt bokked doctor ", id);
+  //  find id From Appointed Doctor databasees
+  try {
+    const DeletedAppointed = await Appintment.findOneAndDelete({
+      Doctor: id,
+    });
+    if (DeletedAppointed) {
+      return res.status(201).json({
+        message: " Doctor deleted Succesfully ",
+      });
+    }
+  } catch (error) {
+    return res.status(404).json({
+      message: "Something went wrong here ",
     });
   }
 };
@@ -175,4 +199,5 @@ export {
   UserProfile,
   AppointedDoctor,
   AccessAppointedDoctor,
+  DeletedAppointedDoctor,
 };

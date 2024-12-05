@@ -10,6 +10,7 @@ import {
   UserProfile,
   AppointedDoctor,
   AccessAppointedDoctor,
+  DeletedAppointedDoctor,
 } from "../Controller/userController.js";
 
 //  Adding  New Doctor Controller
@@ -37,6 +38,7 @@ router.post("/Logout", Auth, Logout);
 router.get("/Userprofile", Auth, UserProfile);
 router.post("/AppointedDoctor/:id", Auth, AppointedDoctor);
 router.get("/AccessAppointedDoctor", Auth, AccessAppointedDoctor);
+router.delete("/DeletedAppointedDoctor/:id", Auth, DeletedAppointedDoctor);
 
 //   admin  Routes
 router.post("/adminRegister", adminRegistraction);
