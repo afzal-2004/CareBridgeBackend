@@ -9,18 +9,19 @@ cloudinary.config({
   api_key: process.env.CLOUDNIARY_API_KEY,
   api_secret: process.env.CLOUDNIARY_API_SECRET,
 });
-const UploadImage = async (path) => {
+const UploadImage = async (base64Image) => {
   try {
-    if (!path) return null;
-    console.log("this is My path", path);
-    const uploadResult = await cloudinary.uploader.upload(path, {
-      resource_type: "auto",
-    });
+    if (!base64Image) return null;
+    // console.log("this is My path", path);
+    const uploadResult = await cloudinary.uploader.upload(
+      `data:image/jpeg;base64,${base64Image}`
+    );
+    // console.log("Image uploaded successfully:", uploadResult);
 
-    fs.unlinkSync(path);
+    // fs.unlinkSync(path);
     return uploadResult;
   } catch (error) {
-    fs.unlinkSync(path);
+    // fs.unlinkSync(path);
 
     console.log(error);
   }

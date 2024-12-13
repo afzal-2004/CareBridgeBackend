@@ -15,9 +15,17 @@ const addNewDoctor = async (req, res) => {
   } = req.body;
   const avtar = req.file;
   // console.log("This is My Avtar", avtar);
+  // console.log("This is the Buffer data For Store  Upload", avtar.buffer);
+  // console.log(
+  //   "This is the Buffer string Data For  Upload",
+  //   avtar.buffer?.toString("base64")
+  // );
+  const File = avtar.buffer?.toString("base64");
 
   const FindDoctor = await Doctor.findOne({ email });
-  const imageurl = await UploadImage(avtar.path);
+  // const imageurl = await UploadImage(avtar.path);
+  const imageurl = await UploadImage(File);
+
   // console.log("This is My image Url Saved In DataBase", imageurl.url, req.body);
   //  Check Doctor Existed Or Not
 
