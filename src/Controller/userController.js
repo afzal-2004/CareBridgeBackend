@@ -182,7 +182,7 @@ const DeletedAppointedDoctor = async (req, res) => {
     });
     if (DeletedAppointed) {
       return res.status(201).json({
-        message: " Doctor deleted Succesfully ",
+        message: " Appointment Cancel Succesfully ",
       });
     }
   } catch (error) {
