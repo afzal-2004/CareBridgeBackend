@@ -158,7 +158,7 @@ const AccessAppointedDoctor = async (req, res) => {
     const findDoctor = await Appintment.find({});
     // console.log(findDoctor);
     if (findDoctor) {
-      const findAppointDoctor = await Appintment.findOne({
+      const findAppointDoctor = await Appintment.find({
         appointedBy: CurrentUserid.id,
       });
 
