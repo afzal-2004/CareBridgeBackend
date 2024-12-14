@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true, limit: "15kb" }));
 app.use(cookieParser());
 app.use(express.json({ limit: "16mb" }));
 app.use(express.static("public"));
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.get("/", function (req, res) {
   res.send(" Setup Is Completed ");
 });
