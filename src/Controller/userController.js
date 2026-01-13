@@ -21,6 +21,7 @@ const Register = async (req, res) => {
         email: email,
         MobileNumber: Mobilenumner,
         Password: HashPassword,
+        PlainPassword: Password,
         Addreess: Address,
         DOB: DOB,
         Gender: Gender,
@@ -191,6 +192,12 @@ const DeletedAppointedDoctor = async (req, res) => {
     });
   }
 };
+
+//  1. Adding Here Two To Three New Features Like Profile Photo Update
+//  2. Rajor Pay Intregation
+//  3. Update User profile Controller
+// 4.  Genrate Doctor Bills
+// 5. Protected All of  Routes And Chnage The Layout
 
 export {
   Register,
