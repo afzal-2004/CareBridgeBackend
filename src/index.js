@@ -10,9 +10,11 @@ dotenv.config({
 
 app.use(
   cors({
+    origin: "http://localhost:3002", // or your frontend URL
     credentials: true,
   })
 );
+
 app.use(express.urlencoded({ extended: true, limit: "15kb" }));
 app.use(cookieParser());
 app.use(express.json({ limit: "16mb" }));
@@ -22,6 +24,9 @@ app.get("/", function (req, res) {
   res.send(" Setup Is Completed ");
 });
 import Routes from "./Routes/index.js";
+// const middleware = (req, res, next) => {
+//   console.log("This is middleware just for testing purposes");
+// };
 
 app.use("/care", Routes);
 Db_Conntection();

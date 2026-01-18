@@ -4,6 +4,8 @@ import { genratreAccessToken } from "../Utils/JwtSecret.js";
 import { Doctor } from "../Models/DoctorModel.js";
 import { Appintment } from "../Models/AppointedDoctor.js";
 import mongoose from "mongoose";
+
+// Register New User
 const Register = async (req, res) => {
   const { name, email, Mobilenumner, Password, Address, Gender, DOB } =
     req.body;
@@ -45,6 +47,7 @@ const Register = async (req, res) => {
   }
 };
 
+// Login  Controller For user
 const Login = async (req, res) => {
   const { emailOrMobile, Password } = req.body;
 
@@ -75,9 +78,12 @@ const Login = async (req, res) => {
       withCredentials: true,
       httpOnly: true,
     });
+
+    const { Password: _, PlainPassword: __, ...safeUser } = finduser._doc;
+
     return res.status(201).json({
       message: "Logged in SuccesFully ",
-      finduser,
+      safeUser,
       token,
     });
   } catch (error) {
@@ -88,6 +94,7 @@ const Login = async (req, res) => {
   }
 };
 
+//  LogOut Controller For user
 const Logout = async (req, res) => {
   try {
     //    Clear the cookie or local storage Jwt Token
@@ -108,6 +115,8 @@ const Logout = async (req, res) => {
     });
   }
 };
+
+// get User Profile By user id
 const UserProfile = async (req, res) => {
   try {
     //  take data of current login user
@@ -123,6 +132,7 @@ const UserProfile = async (req, res) => {
     });
   }
 };
+// Apprinted Doctor
 const AppointedDoctor = async (req, res) => {
   //  take  Doctor id  from the User Prams
   const id = req.params.id;
@@ -152,7 +162,7 @@ const AppointedDoctor = async (req, res) => {
     });
   }
 };
-
+// Get ApproMent Doctor
 const AccessAppointedDoctor = async (req, res) => {
   try {
     const CurrentUserid = req.user;
@@ -173,6 +183,7 @@ const AccessAppointedDoctor = async (req, res) => {
     });
   }
 };
+//  Cancel Appointmnt Of of Doctor
 const DeletedAppointedDoctor = async (req, res) => {
   const id = req.params.id;
   console.log("This is id My currenyt bokked doctor ", id);
@@ -193,6 +204,36 @@ const DeletedAppointedDoctor = async (req, res) => {
   }
 };
 
+//  get doctor By  Doctor id
+const getDoctorDetails = async (req, res) => {
+  const Doctor_id = req.params.id;
+  try {
+    const FindDoctor = await Doctor.findById(Doctor_id);
+    console.log("This is My  find Dctor ", FindDoctor);
+
+    if (!FindDoctor) {
+      return res.status(404).json({
+        Data: {
+          status: false,
+          message: "Doctor is Not Forund ",
+        },
+      });
+    } else {
+      return res.status(201).json({
+        message: "This in the details of The Doctor ",
+        Data: {
+          data: FindDoctor,
+          status: true,
+        },
+      });
+    }
+  } catch (error) {
+    return res.status(501).json({
+      message: "Something Went Wrong With Here ",
+    });
+  }
+};
+
 //  1. Adding Here Two To Three New Features Like Profile Photo Update
 //  2. Rajor Pay Intregation
 //  3. Update User profile Controller
@@ -207,4 +248,5 @@ export {
   AppointedDoctor,
   AccessAppointedDoctor,
   DeletedAppointedDoctor,
+  getDoctorDetails,
 };
