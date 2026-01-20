@@ -132,9 +132,8 @@ const UserProfile = async (req, res) => {
     });
   }
 };
-// Apprinted Doctor
+// Appointed Doctor
 const AppointedDoctor = async (req, res) => {
-  //  take  Doctor id  from the User Prams
   const id = req.params.id;
   //    Access Current Login user
   const CurrentUserid = req.user;
@@ -165,24 +164,52 @@ const AppointedDoctor = async (req, res) => {
 // Get ApproMent Doctor
 const AccessAppointedDoctor = async (req, res) => {
   try {
-    const CurrentUserid = req.user;
-    const findDoctor = await Appintment.find({});
-    // console.log(findDoctor);
-    if (findDoctor) {
-      const findAppointDoctor = await Appintment.find({
-        appointedBy: CurrentUserid.id,
-      });
+    const userId = req.user.id;
 
-      return res.status(201).json(findAppointDoctor);
+    // 1. Fetch all appointments for the user
+    const appointments = await Appintment.find({ appointedBy: userId });
+
+    if (!appointments.length) {
+      return res.status(200).json({
+        data: [],
+        message: "No appointments found",
+        success: true,
+      });
     }
-    return res.status(201).json(findDoctor);
-    // console.log(findAppointDoctor);
+
+    // 2. Extract doctor IDs
+    const doctorIds = appointments.map((app) => app.Doctor);
+
+    // 3. Fetch all related doctors
+    const doctors = await Doctor.find({ _id: { $in: doctorIds } });
+
+    // 4. Merge appointments with doctors
+    const result = doctors.map((doctor) => {
+      const doctorAppointments = appointments.filter(
+        (app) => app.Doctor.toString() === doctor._id.toString(),
+      );
+
+      return {
+        ...doctor.toObject(),
+        appointments: doctorAppointments,
+      };
+    });
+
+    // 5. Final structured response
+    return res.status(200).json({
+      data: result,
+      success: true,
+    });
   } catch (error) {
-    return res.status(400).json({
-      message: "Somethig Went Wrong ",
+    console.error("AccessAppointedDoctor Error:", error);
+
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
     });
   }
 };
+
 //  Cancel Appointmnt Of of Doctor
 const DeletedAppointedDoctor = async (req, res) => {
   const id = req.params.id;
