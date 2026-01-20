@@ -29,6 +29,10 @@ import {
   AccessTotalAppointed,
   TotalActivePatient,
 } from "../Controller/adminController.js";
+import {
+  createOrder,
+  verifyPayment,
+} from "../Controller/RajorPayController.js";
 import { Auth } from "../../Middleware/Auth.js";
 const router = Router();
 
@@ -52,5 +56,8 @@ router.get("/TotalActivePatient", TotalActivePatient);
 router.post("/addNewDoctor", Auth, singleUpload, addNewDoctor);
 router.get("/getDoctorlist", AccessDoctor);
 router.delete("/deleteDoctor/:id", deleteDoctor);
+
+router.post("/create-order", createOrder);
+router.post("/verify-payment", verifyPayment);
 
 export default router;

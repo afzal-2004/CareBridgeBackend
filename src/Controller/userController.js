@@ -236,7 +236,7 @@ const getDoctorDetails = async (req, res) => {
   const Doctor_id = req.params.id;
   try {
     const FindDoctor = await Doctor.findById(Doctor_id);
-    console.log("This is My  find Dctor ", FindDoctor);
+    // console.log("This is My  find Dctor ", FindDoctor);
 
     if (!FindDoctor) {
       return res.status(404).json({
